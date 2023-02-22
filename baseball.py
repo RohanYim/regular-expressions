@@ -11,8 +11,17 @@ def calc_average(at_bats,hits):
     else:
         return hits / at_bats
 
-url = 'https://classes.engineering.wustl.edu/cse330/content/cardinals/cardinals-1940.txt'
-response = requests.get(url, verify=False)
+# url = 'https://classes.engineering.wustl.edu/cse330/content/cardinals/cardinals-1940.txt'
+try:
+    url = sys.argv[1]
+except:
+    print("Usage: python baseball.py <file_url>")
+    sys.exit(1)
+try:
+    response = requests.get(url, verify=False)
+except:
+    print("Invild URL")
+    sys.exit(1)
 text = response.text
 pattern = r'^(\w+ \w+) batted (\d+) times with (\d+) hits and (\d+) runs$'
 regex = re.compile(pattern, re.MULTILINE)
